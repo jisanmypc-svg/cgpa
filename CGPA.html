@@ -12,9 +12,12 @@
         font-family: Arial, Helvetica, sans-serif;
       }
 
-      #div1 {
+      #container {
         height: 100vh;
         width: 100vw;
+        display: flex;
+        align-items: center;
+        justify-content: center;
       }
 
       select,
@@ -41,39 +44,51 @@
         background: white;
         color: black;
       }
+
+      #right {
+        position: fixed;
+        left: 0px;
+        bottom: 0px;
+        font-size: 25px;
+        background: black;
+        width: 100vw;
+        color: white;
+        padding: 20px 40px;
+      }
     </style>
   </head>
   <body>
-    <div>
-      <select id="subjectNumber">
-        <option value="">কয়টা সাবজেক্ট</option>
-        <option value="3">৩ টা</option>
-        <option value="4">৪ টা</option>
-        <option value="5">৫ টা</option>
-        <option value="6">৬ টা</option>
-        <option value="7">৭ টা</option>
-        <option value="8">৮ টা</option>
-      </select>
-      <input type="button" value="GET LIST" id="getList" />
+    <div id="container">
+      <div>
+        <select id="subjectNumber">
+          <option value="">কয়টা সাবজেক্ট</option>
+          <option value="3">৩ টা</option>
+          <option value="4">৪ টা</option>
+          <option value="5">৫ টা</option>
+          <option value="6">৬ টা</option>
+          <option value="7">৭ টা</option>
+          <option value="8">৮ টা</option>
+        </select>
+        <input type="button" value="GET LIST" id="getList" />
 
-      <br />
-      <br />
-      <br />
-      <div id="outPut"></div>
-    </div>
+        <br />
+        <br />
+        <br />
+        <div id="outPut"></div>
+      </div>
 
-    <script>
-      let how = document.querySelector("#subjectNumber");
-      let listBtn = document.querySelector("#getList");
-      let out = document.querySelector("#outPut");
-      listBtn.onclick = function () {
-        if (how.value == "") {
-          alert("অনুগ্রহ করে গ্রেড ইনপুট দিন");
-        } else {
-          out.innerHTML = "";
+      <script>
+        let how = document.querySelector("#subjectNumber");
+        let listBtn = document.querySelector("#getList");
+        let out = document.querySelector("#outPut");
+        listBtn.onclick = function () {
+          if (how.value == "") {
+            alert("অনুগ্রহ করে গ্রেড ইনপুট দিন");
+          } else {
+            out.innerHTML = "";
 
-          for (let i = 1; i <= how.value; i++) {
-            out.innerHTML += `
+            for (let i = 1; i <= how.value; i++) {
+              out.innerHTML += `
 
             <select id="sub">
             <option value="">SUBJECT-${i}</option>
@@ -90,57 +105,34 @@
             </select>
 
             `;
+            }
+            out.innerHTML += `<input type="button" value="GET GRADE" id="btn" onClick="getCGPA()"/>`;
           }
-          out.innerHTML += `<input type="button" value="GET GRADE" id="btn" onClick="getCGPA()"/>`;
-        }
-      };
+        };
 
-      function getCGPA() {
-        let subject = document.querySelectorAll("#sub");
-        let total = 0;
-        for (let n = 0; n <= subject.length - 1; n++) {
-          if (subject[n].value == "") {
-            alert("দয়া করে সঠিক গ্রেড সিলেক্ট করুন");
-            break;
-          } else if (subject[n].value == 0) {
-            alert("দুঃখিত। আপনি ফেইল করেছেন");
-            break;
-          } else {
-            total += Number(subject[n].value);
-            if (n == subject.length - 1) {
-              alert(
-                "আপনার সিজিপিএ হচ্ছে " +
-                  Number(total / subject.length).toFixed(2)
-              );
+        function getCGPA() {
+          let subject = document.querySelectorAll("#sub");
+          let total = 0;
+          for (let n = 0; n <= subject.length - 1; n++) {
+            if (subject[n].value == "") {
+              alert("দয়া করে সঠিক গ্রেড সিলেক্ট করুন");
+              break;
+            } else if (subject[n].value == 0) {
+              alert("দুঃখিত। আপনি ফেইল করেছেন");
+              break;
+            } else {
+              total += Number(subject[n].value);
+              if (n == subject.length - 1) {
+                alert(
+                  "আপনার সিজিপিএ হচ্ছে " +
+                    Number(total / subject.length).toFixed(2)
+                );
+              }
             }
           }
         }
-
-        //alert(subject.length);
-      }
-
-      /*
-      let cg = 0;
-
-      document.getElementById("btn").addEventListener("click", function () {
-        let one = document.getElementById("sub1").value;
-        let two = document.getElementById("sub2").value;
-        let three = document.getElementById("sub3").value;
-        let four = document.getElementById("sub4").value;
-        let five = document.getElementById("sub5").value;
-
-        if (one == "" || two == "" || three == "" || four == "" || five == "") {
-          alert("অনুগ্রহ করে গ্রেড ইনপুট দিন");
-        } else {
-          cg =
-            Number(one) +
-            Number(two) +
-            Number(three) +
-            Number(four) +
-            Number(five);
-          alert("আপনার সিজিপিএ হলো " + cg / 5);
-        }
-      });*/
-    </script>
+      </script>
+    </div>
+    <p id="right">© Jisan Ahmed, TTC, Dhaka-2025</p>
   </body>
 </html>
